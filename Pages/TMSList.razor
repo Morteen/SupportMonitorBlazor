@@ -1,0 +1,48 @@
+﻿
+@page "/"
+@inherits TmsListBase
+<h3>Våre kjørende systemer</h3>
+@if (BlazorTmsSortedList == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+
+<a href="#">
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Navn</th>
+                <th scope="col">Land</th>
+                <th scope="col">kategori</th>
+                <th>Status</th>
+                <th>Kritiske feil</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tms in BlazorTmsSortedList)
+            {
+
+                <tr role="Button" class="@SetAlertBackround(tms) table-row" @onclick="()=>NavtoPage(tms.TmsId)">
+
+                    <th scope="row">@tms.TmsId</th>
+                    <td>@tms.Name</td>
+                    <td>@tms.Country</td>
+                    <td>@tms.TmsCategory</td>
+                    <td class=@SetStatusColor(tms)>@SetStatusText(tms)</td>
+                    <td>@tms.CriticalErrors</td>
+                    <td><button class="btn btn-primary">Detaljer</button></td>
+
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+
+</a>
+    }

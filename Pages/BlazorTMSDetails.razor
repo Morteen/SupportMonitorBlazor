@@ -1,0 +1,190 @@
+﻿@page "/BlazorTMSDetails/{id}"
+@inherits BlazorTMSDetailsBase
+
+@if (BlazorTMS == null)
+{
+    <div class="spinner"></div>
+
+}
+else
+{
+  
+    <div class="content content-margined">
+        <div class="order-header">
+
+            <div class="TMSBox">
+                <div class="TMSName">
+                    <div class="CompName">@BlazorTMS.Name</div>
+
+                    @BlazorTMS.TmsCategory
+                </div>
+            </div>
+
+        </div>
+        <div class="webStatus">
+            @if (TmsProps == null)
+            {
+                <h1>Loading</h1>
+            }
+            else
+            { @if (TmsProps.Count < 1 && webAdressToCheckResponse == null)
+            {
+            }
+            else {
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Navn</th>
+                <th></th>
+                <th> Value</th>
+                <th></th>
+                <th>HttpResponse</th>
+                <th>Historie</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var tms in TmsProps)
+            {
+                <tr>
+                    <td>@tms.Name</td>
+                    <td></td>
+                    <td>@tms.Value</td>
+                    <td></td>
+                    <td>HttpResponse : @webAdressToCheckResponse</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+            }
+            }
+
+
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Display name</th>
+                    <th>Service name</th>
+                    <th> Status</th>
+                    <th>Kjøretid</th>
+                    <th>Action</th>
+                    <th>Historie</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button @onclick="()=>showModal=!showModal">Vis system status</button>
+        @if (showModal == true)
+        {
+            <div>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>System navn</th>
+                            <th>Status</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                        <tr>
+                            <td>Mobile</td>
+                            <td>Running</td>
+                            <td>
+                               
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        }
+
+        <!--Folder og mappe del-->
+        <button @onclick=@openDiskModal>Vis mappe status </button>
+        @if (showFolderModal == true)
+        {
+            @if (diskspaceList == null)
+            {
+                <div class="spinner"></div>}
+            else
+            {
+                if (diskspaceList.Count == 0)
+                {
+                    <div> @BlazorTMS.Name  overvåker ingen disker eller mapper</div>
+                    <div>@diskspaceList.Count    sjekker liste innhold</div>
+                }
+                else
+                {
+
+
+                    <div>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Mappe navn</th>
+                                    <th>Type</th>
+                                    <th>Max size</th>
+                                    <th>Brukt plass</th>
+                                    <th>Minmum prosent ledig</th>
+                                    <th>Faktisk ledig kapaistet</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var space in diskspaceList)
+                                {
+
+                                    <tr>
+
+
+                                        <td>@space.Name</td>
+
+                                        <td>@space.Type</td>
+                                        <td>@space.MaxSize</td>
+                                        <td>@space.Actualsize</td>
+                                        <td>@space.FreespacePercentMinimum</td>
+                                        <td>@usedFolderCapasety(space.MaxSize, space.Actualsize)</td>
+
+
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="@setProgressBarColor(space.MaxSize,space.Actualsize)" role="progressbar" style="width:@setFolderValuePresent(space.MaxSize,space.Actualsize)" aria-valuenow="@setFolderValue(space.MaxSize,space.Actualsize)" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div> @space.Actualsize
+                                        </td>
+
+
+                                    </tr>
+
+                                }
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+                }
+            }
+
+        }<!-- slutt på showFolderModal-->
+        <!--Slutt på Folder og mappe del-->
+
+    </div>
+
+}

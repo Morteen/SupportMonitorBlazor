@@ -1,0 +1,49 @@
+﻿
+@page "/update"
+@inherits TestUpdatedateBase
+<h3>TestUpdatedate</h3>
+<button class="btn btn-primary" @onclick="()=>TestUpdateDB()">Try to update DB</button>
+
+@if (DiskSpaceProps == null)
+{<p>DiskSpaceProps er null</p>}
+else
+{
+
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">TMSID</th>
+                <th scope="col">kategori</th>
+                <th>Status</th>
+                <th>Kritiske feil</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var space in DiskSpaceProps)
+            {
+
+            <tr>
+
+                <th scope="row">@space.Id</th>
+                <td>@space.Id</td>
+                <td>@space.TmsId</td>
+                <td>@space.Name</td>
+                <td>@space.Actualsize</td>
+                <td>@space.MaxSize</td>
+             
+              
+                <td><button class="btn btn-primary" @onclick="()=>TestUpdateDB()">Detaljer</button></td>
+
+            </tr>
+
+            }
+        </tbody>
+
+    </table>
+
+}

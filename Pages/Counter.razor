@@ -1,0 +1,97 @@
+﻿@page "/counter"
+@inherits TmsListBase
+    <div class="container-fluid">
+        <div class="row">
+            @if (TransFleetList == null)
+            {
+                <div class="spinner"></div>
+                <h4>Loading</h4>
+            }
+
+            else
+            {
+        <div class="col border border-5  border border-danger" id="colLeft">
+
+            <h2 style="text-align: center">TransFleet</h2>
+           
+            <table class="table">
+                <a href="#">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Navn</th>
+                            <th scope="col">Land</th>
+                            <th>Status</th>
+                            <th>Kritiske feil</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tf in TransFleetList)
+                        {
+                            <tr role="Button" class="@SetAlertBackround(tf) table-row" @onclick="()=>NavtoPage(tf.TmsId)">
+                                <th scope="row">@tf.TmsId</th>
+                                <td>@tf.Name</td>
+                                <td>@tf.Country</td>
+                                <td class=@SetStatusColor(tf)>@SetStatusText(tf)</td>
+                                <td>@tf.CriticalErrors</td>
+                                <td><button class="btn btn-primary">Detaljer</button></td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </a>
+            </table>
+
+        </div>
+            }
+
+
+
+
+            @if (TransFleetList == null)
+            {
+                <div class="spinner"></div>
+                <h4>Loading</h4>
+            }
+            else
+            {
+                <div class="col" id="colRight">
+
+                    <h2 style="text-align: center">TDXlog</h2>
+                    <table class="table">
+                        <a href="#">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Navn</th>
+                                    <th scope="col">Land</th>
+
+                                    <th>Status</th>
+                                    <th>Kritiske feil</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tdx in TdxlogList)
+                                {
+                                    <tr role="Button" class="@SetAlertBackround(tdx) table-row" @onclick="()=>NavtoPage(tdx.TmsId)">
+                                        <th scope="row">@tdx.TmsId</th>
+                                        <td>@tdx.Name</td>
+                                        <td>@tdx.Country</td>
+                                        <td class=@SetStatusColor(tdx)>@SetStatusText(tdx)</td>
+                                        <td>@tdx.CriticalErrors</td>
+                                        <td><button class="btn btn-primary">Detaljer</button></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                            </a>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+

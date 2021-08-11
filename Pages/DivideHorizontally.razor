@@ -1,0 +1,95 @@
+﻿
+
+@page "/devide"
+@inherits TmsListBase
+
+@if (TransFleetList == null)
+{
+    <div class="spinner"></div>
+  
+}
+else
+{
+
+<div>
+
+
+    <h2 style="text-align: center">TransFleet</h2>
+    <a href="#">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Navn</th>
+                    <th scope="col">Land</th>
+                    <th>Status</th>
+                    <th>Kritiske feil</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tf in TransFleetList)
+                {
+                <tr role="Button" class="@SetAlertBackround(tf) table-row" @onclick="()=>NavtoPage(tf.TmsId)">
+                    <th scope="row">@tf.TmsId</th>
+                    <td>@tf.Name</td>
+                    <td>@tf.Country</td>
+                    <td class=@SetStatusColor(tf)>@SetStatusText(tf)</td>
+                    <td>@tf.CriticalErrors</td>
+                    <!-- <td><button class="btn btn-primary"><a href="@($"BlazorTMSDetails/{tf.TmsId}")"></a>Detaljer</button></td>-->
+
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </a>
+</div>
+}
+<hr />
+
+@if (TdxlogList == null)
+{
+    <div class="spinner"></div>
+  
+}
+else
+{
+
+<div class="divideH">
+
+    <h2 style="text-align: center">TDXlog</h2>
+    <a href="#">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Navn</th>
+                    <th scope="col">Land</th>
+
+                    <th>Status</th>
+                    <th>Kritiske feil</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tdx in TdxlogList)
+                {
+                    <tr role="Button" class="@SetAlertBackround(tdx) table-row" @onclick="()=>NavtoPage(tdx.TmsId)">
+                        <th scope="row">@tdx.TmsId</th>
+                        <td>@tdx.Name</td>
+                        <td>@tdx.Country</td>
+                        <td class=@SetStatusColor(tdx)>@SetStatusText(tdx)</td>
+                        <td>@tdx.CriticalErrors</td>
+                        <td><button class="btn btn-primary">Detaljer</button></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </a>
+</div>
+}
